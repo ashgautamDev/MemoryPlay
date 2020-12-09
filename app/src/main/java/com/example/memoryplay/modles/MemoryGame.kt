@@ -7,10 +7,11 @@ class MemoryGame(private val boardSize: BoardSize) {
 
     val cards: List<MemoryCard>
     var numofPairsfound = 0
+    var numOfCardFlip = 0
     private var indexofsingleselectedCard: Int? = null
 
     companion object {
-        val TAG = "chck fun"
+        val TAG = "check fun"
     }
 
     init {
@@ -21,6 +22,7 @@ class MemoryGame(private val boardSize: BoardSize) {
     }
 
     fun flipCard(position: Int): Boolean {
+        numOfCardFlip++
         val card = cards[position]
         var matchFound = false
         // we have 3 cases here /
@@ -28,15 +30,15 @@ class MemoryGame(private val boardSize: BoardSize) {
         // 1 card flipped >> filp over and check for a mathch
         // 2 card flipped >> restore cards and flip over current card
 
-        //case 1 and 2
+        //case 0 and 2
         if (indexofsingleselectedCard == null) {
             restoreCards()
             indexofsingleselectedCard = position
-        } else {
-            val matchFound = checkforTheMatch(indexofsingleselectedCard!!, position)
+        }else {
+            //for 1 case
+            matchFound = checkforTheMatch(indexofsingleselectedCard!!, position)
             indexofsingleselectedCard = null
         }
-
         card.isFaceUp = !card.isFaceUp
         return matchFound
     }
@@ -44,11 +46,12 @@ class MemoryGame(private val boardSize: BoardSize) {
     private fun checkforTheMatch(position1: Int, position2: Int): Boolean {
         if (cards[position1].identifier != cards[position2].identifier) {
             return false
+        } else {
+            cards[position1].isMatched = true
+            cards[position2].isMatched = true
+            numofPairsfound++
+            Log.i(TAG, "chekforTheMatch: num of pairs found $numofPairsfound")
         }
-        cards[position1].isMatched = true
-        cards[position2].isMatched = true
-        numofPairsfound++
-        Log.i(TAG, "chekforTheMatch: num of pairs found $numofPairsfound")
         return true
 
     }
@@ -69,5 +72,10 @@ class MemoryGame(private val boardSize: BoardSize) {
     fun isFacedUp(position: Int): Boolean {
         return cards[position].isFaceUp
     }
+
+    fun getNumOfMoves(): Int {
+        return numOfCardFlip / 2
+    }
+
 
 }
