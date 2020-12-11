@@ -2,7 +2,9 @@ package com.example.memoryplay.Utils
 
 import com.example.memoryplay.R
 
-val DEFAULT_ICONS =  listOf(
+const val EXTRA_GAME_NAME = "EXTRA_GAME_NAME"
+const val EXTRA_BOARD_SIZE = "EXTRA_BOARD_SIZE"
+val DEFAULT_ICONS = listOf(
     R.drawable.ic_alarm,
     R.drawable.ic_bulb,
     R.drawable.ic_car,

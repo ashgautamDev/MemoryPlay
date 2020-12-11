@@ -5,12 +5,19 @@
     <item
         android:id="@+id/NewLevelButton"
         android:enabled="true"
-        android:title="New Level"
+        android:title="Choose Level"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/CreateGameButton"
+        android:enabled="true"
+        android:title="Create New Game"
+        app:showAsAction="never" />
+
+
     <item
         android:id="@+id/refreshButton"
         android:enabled="true"
-        android:title="Refresh"
         android:icon="@drawable/ic_refresh"
+        android:title="Refresh"
         app:showAsAction="always" />
 </menu>
