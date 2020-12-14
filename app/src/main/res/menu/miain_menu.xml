@@ -15,6 +15,10 @@
 
 
     <item
+        android:id="@+id/btn_download"
+        android:title="Download Game"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/refreshButton"
         android:enabled="true"
         android:icon="@drawable/ic_refresh"

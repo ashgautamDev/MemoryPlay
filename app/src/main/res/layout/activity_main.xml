@@ -5,15 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/clayout"
+
     tools:context=".MainActivity">
 
     <LinearLayout
         android:id="@+id/llGameInfo"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/design_default_color_secondary_variant"
         android:orientation="horizontal"
-
+        android:background="@color/secondaryDark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -23,6 +23,7 @@
             android:layout_height="match_parent"
             android:layout_margin="10dp"
             android:layout_weight="1"
+            android:background="@color/secondaryDark"
             app:cardCornerRadius="8dp">
 
             <TextView
@@ -41,6 +42,7 @@
             android:layout_height="match_parent"
             android:layout_margin="10dp"
             android:layout_weight="1"
+            android:background="@color/secondaryDark"
             app:cardCornerRadius="8dp">
 
             <TextView

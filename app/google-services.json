@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "648092907619",
+    "project_id": "memory-play-67753",
+    "storage_bucket": "memory-play-67753.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:648092907619:android:9e589c0599a9836da22056",
+        "android_client_info": {
+          "package_name": "com.example.memoryplay"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "648092907619-do9ec6s4ooglae73l7j8bdst7j1ep8qp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTKecD6vDeSMBBytEC5m42SSlr-hJ7JDo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "648092907619-do9ec6s4ooglae73l7j8bdst7j1ep8qp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -3,7 +3,10 @@ package com.example.memoryplay.modles
 import android.util.Log
 import com.example.memoryplay.Utils.DEFAULT_ICONS
 
-class MemoryGame(private val boardSize: BoardSize) {
+class MemoryGame(
+    private val boardSize: BoardSize,
+    customImages: List<String>?
+) {
 
     val cards: List<MemoryCard>
     var numofPairsfound = 0
@@ -16,9 +19,15 @@ class MemoryGame(private val boardSize: BoardSize) {
 
     init {
         // logic for taking random images
-        val chooseImage = DEFAULT_ICONS.shuffled().take(boardSize.numOfPairs())
-        val randomizedImage = (chooseImage + chooseImage).shuffled()
-        cards = randomizedImage.map { MemoryCard(it) }
+        if (customImages == null) {
+            val chooseImage = DEFAULT_ICONS.shuffled().take(boardSize.numOfPairs())
+            val randomizedImage = (chooseImage + chooseImage).shuffled()
+            cards = randomizedImage.map { MemoryCard(it) }
+        } else {
+            val randamizedImage = (customImages + customImages).shuffled()
+            cards = randamizedImage.map { MemoryCard(it.hashCode(), it) }
+        }
+
     }
 
     fun flipCard(position: Int): Boolean {
@@ -34,7 +43,7 @@ class MemoryGame(private val boardSize: BoardSize) {
         if (indexofsingleselectedCard == null) {
             restoreCards()
             indexofsingleselectedCard = position
-        }else {
+        } else {
             //for 1 case
             matchFound = checkforTheMatch(indexofsingleselectedCard!!, position)
             indexofsingleselectedCard = null

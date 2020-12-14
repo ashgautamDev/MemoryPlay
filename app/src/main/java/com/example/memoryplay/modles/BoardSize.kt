@@ -5,6 +5,10 @@ enum class BoardSize(val numOfCards: Int) {
     MEDIUM(18),
     HARD(24);
 
+    companion object {
+        fun getCardValues(value: Int) = values().first { it.numOfCards == value }
+    }
+
     fun getColums(): Int {
         return when (this) {
             EASY -> 2
@@ -13,7 +17,8 @@ enum class BoardSize(val numOfCards: Int) {
         }
 
     }
-    fun getRows() : Int{
+
+    fun getRows(): Int {
         return numOfCards/getColums()
     }
     fun numOfPairs() : Int{

@@ -11,4 +11,10 @@
     <color name="progress_start">#FF0000</color>
     <color name="progress_end">#007E0D</color>
 
+    <color name="primary">#004d40</color>
+    <color name="primaryDark">#00251a</color>
+    <color name="Secondary">#66bb6a</color>
+    <color name="secondaryDark">#338a3e</color>
+
+
 </resources>
