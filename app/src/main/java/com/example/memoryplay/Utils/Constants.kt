@@ -4,6 +4,12 @@ import com.example.memoryplay.R
 
 const val EXTRA_GAME_NAME = "EXTRA_GAME_NAME"
 const val EXTRA_BOARD_SIZE = "EXTRA_BOARD_SIZE"
+
+const val MAX_MOVES_FOR_EASY = 5
+const val MAX_MOVES_FOR_MEDIUM = 15
+const val MAX_MOVES_FOR_HARD = 25
+const val OUT_OF_MOVES = 0
+
 val DEFAULT_ICONS = listOf(
     R.drawable.ic_alarm,
     R.drawable.ic_bulb,

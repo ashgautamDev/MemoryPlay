@@ -2,8 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
     <item
-        android:id="@+id/NewLevelButton"
+        android:id="@+id/mi_mode"
+        android:checkable="true"
+        android:checked="false"
+        android:title="Challange Mode"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/mi_NewLevelButton"
         android:enabled="true"
         android:title="Choose Level"
         app:showAsAction="never" />
@@ -16,6 +23,7 @@
 
     <item
         android:id="@+id/btn_download"
+        android:enabled="true"
         android:title="Download Game"
         app:showAsAction="never" />
     <item

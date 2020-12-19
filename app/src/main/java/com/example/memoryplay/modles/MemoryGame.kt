@@ -1,7 +1,7 @@
 package com.example.memoryplay.modles
 
 import android.util.Log
-import com.example.memoryplay.Utils.DEFAULT_ICONS
+import com.example.memoryplay.Utils.*
 
 class MemoryGame(
     private val boardSize: BoardSize,
@@ -86,5 +86,20 @@ class MemoryGame(
         return numOfCardFlip / 2
     }
 
+    fun getnumofMovesWhenChanllangeModeIsOn(): Int {
+        return when (boardSize) {
+            BoardSize.EASY -> MAX_MOVES_FOR_EASY - numOfCardFlip / 2
+            BoardSize.MEDIUM -> MAX_MOVES_FOR_MEDIUM - numOfCardFlip / 2
+            BoardSize.HARD -> MAX_MOVES_FOR_HARD - numOfCardFlip / 2
+        }
+    }
+
+    fun getMaximumMoves(): Int {
+        return when (boardSize) {
+            BoardSize.EASY -> MAX_MOVES_FOR_EASY
+            BoardSize.MEDIUM -> MAX_MOVES_FOR_MEDIUM
+            BoardSize.HARD -> MAX_MOVES_FOR_HARD
+        }
+    }
 
 }
