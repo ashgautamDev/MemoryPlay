@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MemoryPlay">
-        <activity android:name=".CreateActivity"></activity>
+        <activity android:name=".GamesListActivity"></activity>
+        <activity android:name=".CreateActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

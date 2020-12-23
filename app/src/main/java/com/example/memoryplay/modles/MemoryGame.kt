@@ -36,7 +36,7 @@ class MemoryGame(
         var matchFound = false
         // we have 3 cases here /
         // 0 card flipped >> restore card + flip over
-        // 1 card flipped >> filp over and check for a mathch
+        // 1 card flipped >> flip over and check for a match
         // 2 card flipped >> restore cards and flip over current card
 
         //case 0 and 2

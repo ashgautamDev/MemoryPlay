@@ -21,7 +21,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.memoryplay.Adapters.MemoryBoardAdapter
 import com.example.memoryplay.Utils.EXTRA_BOARD_SIZE
 import com.example.memoryplay.Utils.EXTRA_GAME_NAME
-import com.example.memoryplay.Utils.OUT_OF_MOVES
 import com.example.memoryplay.modles.BoardSize
 import com.example.memoryplay.modles.MemoryGame
 import com.example.memoryplay.modles.UserImageList
@@ -40,6 +39,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvMoves: TextView
     private lateinit var tvPairs: TextView
     private lateinit var btn_next: Button
+
 
 
     private var boardSize: BoardSize = BoardSize.EASY
@@ -95,33 +95,9 @@ class MainActivity : AppCompatActivity() {
                 showDownloadDialoge()
                 return true
             }
-            R.id.mi_mode -> {
-                item.isChecked = !item.isChecked
-                if (item.isChecked) {
-                    challangeModeSwitch()
-                    // challangeModeLogic()
-                    if (memoryGame.getnumofMovesWhenChanllangeModeIsOn() == OUT_OF_MOVES) {
-                        Log.e(
-                            TAG,
-                            "challangeModeLogic: ${memoryGame.getnumofMovesWhenChanllangeModeIsOn()}"
-                        )
-
-                        Toast.makeText(this, "You lose", Toast.LENGTH_SHORT).show()
-                        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-                        builder.setTitle("OUT OF MOVES")
-                            .setPositiveButton("PLAY AGAIN") { dialog, which ->
-                                initRecylerview()
-                            }
-                            .show()
-                        initRecylerview()
-                        return true
-                    }
-                    return true
-                }
-                if (!item.isChecked) {
-                    Toast.makeText(this, "Default Mode", Toast.LENGTH_SHORT).show()
-                    initRecylerview()
-                }
+            R.id.btn_gameList -> {
+                val intent = Intent(this, GamesListActivity::class.java)
+                startActivity(intent)
                 return true
             }
         }
@@ -141,38 +117,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    // this is for when user checked
-    private fun challangeModeSwitch() {
-        initRecylerview()
-        Log.e(TAG, "challangeMode: is on")
-        Toast.makeText(this, "Challange Mode", Toast.LENGTH_SHORT).show()
-        supportActionBar?.title = "Challange Mode"
-        adapter.notifyDataSetChanged()
-//        challangeModeLogic()
-
-
-    }
-
-    //  this function is for updating the cardds
-    private fun challangeModeLogic(): Boolean {
-        if (memoryGame.getnumofMovesWhenChanllangeModeIsOn() == OUT_OF_MOVES) {
-            Log.e(TAG, "challangeModeLogic: ${memoryGame.getnumofMovesWhenChanllangeModeIsOn()}")
-            youLoseGame()
-            initRecylerview()
-        }
-        return true
-
-    }
-
-    private fun youLoseGame() {
-        Toast.makeText(this, "You lose", Toast.LENGTH_SHORT).show()
-        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-        builder.setTitle("OUT OF MOVES")
-            .setPositiveButton("PLAY AGAIN") { dialog, which ->
-                initRecylerview()
-            }
-            .show()
-    }
 
     private fun showDownloadDialoge() {
         val boardDownloadView = LayoutInflater.from(this).inflate(R.layout.download_dialoge, null)
@@ -347,27 +291,9 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
-        // This color is for when challange mode is selected
-// i want
-//        if (challangeModeLogic() == true) {
-//            val colorMoves = ArgbEvaluator().evaluate(
-//                memoryGame.getnumofMovesWhenChanllangeModeIsOn()
-//                    .toFloat() / memoryGame.getMaximumMoves(),
-//                ContextCompat.getColor(this, R.color.progress_start),
-//                ContextCompat.getColor(this, R.color.progress_end)
-//            ) as Int
-//            tvMoves.setTextColor(colorMoves)
-//            tvMoves.text = "Moves : ${memoryGame.getnumofMovesWhenChanllangeModeIsOn().toString()}"
-//        } else {
-//            tvMoves.text = "Moves : ${memoryGame.getNumOfMoves()}"
-//        }
         tvMoves.text = "Moves : ${memoryGame.getNumOfMoves()}"
         adapter.notifyDataSetChanged()
-
     }
-
-
 }
 
 
