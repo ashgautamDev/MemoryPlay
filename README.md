@@ -15,10 +15,8 @@
 - User can download any custom games others have made (stored on Firebase)
 ![download game](https://user-images.githubusercontent.com/56464485/103129771-0961c680-46c0-11eb-8a41-3c4b343d82a8.png)
 
-This app is made through a series of instructional videos made by [Rahul Pandey] (https://www.youtube.com/user/rpandey1234)
+This app is made through a series of instructional videos made by [Rahul Pandey](https://www.youtube.com/user/rpandey1234).
+
 This was my first time to work with firebase for cloud storage . Building this app was really enjoyable and challanging ! 
 
 
-## Attribution
-- [Picasso](https://github.com/square/picasso)
-- [Confetti](https://github.com/jinatonic/confetti)
