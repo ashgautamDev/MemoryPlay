@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.memoryplay.Adapters.MemoryBoardAdapter
 import com.example.memoryplay.Utils.EXTRA_BOARD_SIZE
 import com.example.memoryplay.Utils.EXTRA_GAME_NAME
+import com.example.memoryplay.Utils.OUT_OF_MOVES
 import com.example.memoryplay.modles.BoardSize
 import com.example.memoryplay.modles.MemoryGame
 import com.example.memoryplay.modles.UserImageList
@@ -40,12 +41,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvPairs: TextView
     private lateinit var btn_next: Button
 
-
-
     private var boardSize: BoardSize = BoardSize.EASY
     private val database = Firebase.firestore
     private var gameName: String? = null
     private var customGameImages: List<String>? = null
+    private var cmode: Boolean = false
 
     companion object {
         private const val TAG = "main activity"
@@ -60,8 +60,6 @@ class MainActivity : AppCompatActivity() {
         tvMoves = findViewById(R.id.tvMoves)
         tvPairs = findViewById(R.id.tvPairs)
         btn_next = findViewById(R.id.nextButton)
-
-
         initRecylerview()
     }
 
@@ -71,7 +69,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
         when (item.itemId) {
+
             R.id.refreshButton -> {
                 if (memoryGame.getNumOfMoves() > 0 && !memoryGame.wonAGame()) {
                     showAlertDialog(" You Will Lose Current Game", null, View.OnClickListener {
@@ -95,9 +95,20 @@ class MainActivity : AppCompatActivity() {
                 showDownloadDialoge()
                 return true
             }
-            R.id.btn_gameList -> {
-                val intent = Intent(this, GamesListActivity::class.java)
-                startActivity(intent)
+            R.id.mi_mode -> {
+                item.isChecked = !item.isChecked
+                if (item.isChecked) {
+                    challangeModeSwitch()
+                    cmode = true
+                    initRecylerview()
+                    return true
+                }
+
+                if (!item.isChecked) {
+                    cmode = false
+                    Toast.makeText(this, "Default Mode", Toast.LENGTH_SHORT).show()
+                    initRecylerview()
+                }
                 return true
             }
         }
@@ -145,14 +156,18 @@ class MainActivity : AppCompatActivity() {
                 val numCards = userImageList.images.size * 2
                 boardSize = BoardSize.getCardValues(numCards)
                 customGameImages = userImageList.images
-                initRecylerview()
                 gameName = customGameName
 
                 for (imageurl in userImageList.images) {
                     Picasso.get().load(imageurl).fetch()
                 }
+                Snackbar.make(
+                    clayout,
+                    "You're now playing '$customGameName' ! ",
+                    Snackbar.LENGTH_SHORT
+                ).show()
 
-
+                initRecylerview()
             }
             .addOnFailureListener { exception ->
                 Log.e(TAG, "Exception when retrieving the game ", exception)
@@ -291,9 +306,72 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-        tvMoves.text = "Moves : ${memoryGame.getNumOfMoves()}"
+
+        // This color is for when challange mode is selected
+
+        if (cmode == true) {
+            challangeModeLogic()
+            val colorMoves = ArgbEvaluator().evaluate(
+                memoryGame.getnumofMovesWhenChanllangeModeIsOn()
+                    .toFloat() / memoryGame.getMaximumMoves(),
+                ContextCompat.getColor(this, R.color.progress_start),
+                ContextCompat.getColor(this, R.color.progress_end)
+            ) as Int
+            tvMoves.setTextColor(colorMoves)
+            tvMoves.text = "Moves : ${memoryGame.getnumofMovesWhenChanllangeModeIsOn().toString()}"
+        } else {
+            tvMoves.text = "Moves : ${memoryGame.getNumOfMoves()}"
+        }
+//        tvMoves.text = "Moves : ${memoryGame.getNumOfMoves()}"
+        adapter.notifyDataSetChanged()
+
+    }
+
+    // this is for when user checked
+    private fun challangeModeSwitch() {
+
+        initRecylerview()
+        Log.e(TAG, "challangeMode: is on")
+        Toast.makeText(this, "Challange Mode", Toast.LENGTH_SHORT).show()
         adapter.notifyDataSetChanged()
     }
+
+    //  this function is for updating the cardds
+    private fun challangeModeLogic() {
+        if (memoryGame.getnumofMovesWhenChanllangeModeIsOn() == OUT_OF_MOVES && memoryGame.wonAGame()) {
+            Log.e(TAG, "challangeModeLogic: ${memoryGame.getnumofMovesWhenChanllangeModeIsOn()}")
+
+            Snackbar.make(clayout, "YOU WON ! Congratulation", Snackbar.LENGTH_LONG).show()
+            CommonConfetti.rainingConfetti(
+                clayout,
+                intArrayOf(Color.YELLOW, Color.GREEN, Color.MAGENTA)
+            ).oneShot()
+            btn_next.isVisible = true
+            btn_next.setOnClickListener {
+                boardSize = when (boardSize) {
+                    BoardSize.EASY -> BoardSize.MEDIUM
+                    BoardSize.MEDIUM -> BoardSize.HARD
+                    BoardSize.HARD -> BoardSize.HARD
+                }
+                initRecylerview()
+            }
+        }
+        if (memoryGame.getnumofMovesWhenChanllangeModeIsOn() == OUT_OF_MOVES) {
+            youLoseGame()
+        }
+    }
+
+
+    private fun youLoseGame() {
+        Toast.makeText(this, "You lose", Toast.LENGTH_SHORT).show()
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        builder.setTitle("OUT OF MOVES")
+            .setPositiveButton("TAP TO PLAY AGAIN") { dialog, which ->
+                initRecylerview()
+            }
+            .show()
+    }
 }
+
 
 

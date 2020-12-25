@@ -24,10 +24,9 @@ class GamesListActivity : AppCompatActivity() {
 
     private lateinit var adapter: GamesNameListAdapter
     private lateinit var rvGameList: RecyclerView
-    private val gameCollectionRef = Firebase.firestore.collection("Games")
     private lateinit var btn_showGameNames: Button
     private lateinit var tv_game_list: TextView
-
+    private val gameCollectionRef = Firebase.firestore
 
     companion object {
         private const val TAG = "Game List Activiy"
@@ -50,22 +49,7 @@ class GamesListActivity : AppCompatActivity() {
         }
     }
 
-    private fun retreiveGameNames() = CoroutineScope(Dispatchers.IO).launch {
-        try {
-            val querySnapshot = gameCollectionRef.get().await()
-            val sb = StringBuilder()
-            for (document in querySnapshot.documents) {
-                val person = document.toObject<DataGamesList>()
-                sb.append(person)
-            }
-            withContext(Dispatchers.Main) {
-                Log.e(TAG, "retreiveGameNames: ${sb}/n")
-                tv_game_list.text = sb.toString()
-            }
-        } catch (e: Exception) {
-            withContext(Dispatchers.Main) {
-                Toast.makeText(this@GamesListActivity, e.message, Toast.LENGTH_LONG).show()
-            }
-        }
+    private fun retreiveGameNames() {
     }
+
 }
